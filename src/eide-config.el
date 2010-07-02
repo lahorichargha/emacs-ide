@@ -19,6 +19,10 @@
 
 (provide 'eide-config)
 
+(defvar eide-options-file       ".emacs-ide.options")
+(defvar eide-project-file       ".emacs-ide.project")
+(defvar eide-project-notes-file ".emacs-ide.project_notes")
+
 (defvar eide-config-show-trailing-spaces nil)
 (defvar eide-config-show-svn-status-flag nil)
 
