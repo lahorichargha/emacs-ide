@@ -94,6 +94,7 @@
     ;; Compile buffer name will be updated in eide-i-windows-display-buffer-function
     (setq eide-windows-update-result-buffer-id "c")
     (compile l-compile-command))
+  (end-of-buffer)
   (eide-windows-select-window-file t))
 
 ;; ----------------------------------------------------------------------------
