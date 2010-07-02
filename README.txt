@@ -2,7 +2,28 @@
 | Emacs-IDE |
 \-----------/
 
-Version 1.3+ - 04/2010
+Version 1.4dev - 07/2010
+
+
+-------------------------------------------------------------------------------
+Copyright
+-------------------------------------------------------------------------------
+
+Copyright (C) 2005-2010 Cédric Marie
+
+This program is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 
 -------------------------------------------------------------------------------
 About Emacs-IDE
@@ -10,6 +31,10 @@ About Emacs-IDE
 
 Emacs-IDE is an IDE (Integrated Development Environment) interface for Emacs
 (code browsing, compilation, debug...).
+
+The purpose is to provide a user-friendly IDE interface for Emacs, with
+dedicated windows (current file, menu with list of opened files,
+search/compilation output) and convenient shortcuts.
 
 It is suitable for almost all languages (as long as they are supported by
 ctags). Cscope provides additional browsing facility for C/C++ files.
@@ -21,16 +46,16 @@ supposed not to modify standard Emacs behaviour, but only add new features that
 can be enabled or disabled.
 Emacs-IDE takes the place of user configuration file. It intentionally changes
 Emacs behaviour - in order to manage display in dedicated windows - and
-redefines reserved keys - in order to have a wide range of convenient
+redefines reserved keys - in order to provide a wide range of convenient
 shortcuts.
 
-Homepage : http://emacs-ide.sourceforge.net/
+Homepage: http://home.gna.org/emacs-ide/
 
-License  : GPL (http://www.gnu.org/licenses/gpl.html)
+License:  GPL (http://www.gnu.org/licenses/gpl.html)
 
-Requires : - Emacs  (http://www.gnu.org/software/emacs/)
-           - Ctags  (http://ctags.sourceforge.net/)
-           - Cscope (http://cscope.sourceforge.net/)
+Requires: - Emacs  (http://www.gnu.org/software/emacs/)
+          - Ctags  (http://ctags.sourceforge.net/)
+          - Cscope (http://cscope.sourceforge.net/)
 
 
 -------------------------------------------------------------------------------
