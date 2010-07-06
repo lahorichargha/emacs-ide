@@ -136,9 +136,9 @@
 ;; ----------------------------------------------------------------------------
 ;; Stop debug mode.
 ;;
-;; input  : gdb-exit-flag : t if gdb session is finished
+;; input  : p-gdb-exit-flag : t if gdb session is finished.
 ;; ----------------------------------------------------------------------------
-(defun eide-i-project-debug-mode-stop (gdb-exit-flag)
+(defun eide-i-project-debug-mode-stop (p-gdb-exit-flag)
   (eide-keys-configure-for-editor)
   (select-window gdb-source-window)
   (eide-windows-layout-build)
@@ -146,26 +146,28 @@
     (tool-bar-mode -1))
   (setq display-buffer-function 'eide-i-windows-display-buffer-function)
   ;; NB: I haven't found a way to know if gdb is still running.
-  ;; gdb-exit-flag is always nil, but should become useful later...
-  (if gdb-exit-flag
+  ;; p-gdb-exit-flag is always nil, but should become useful later...
+  (if p-gdb-exit-flag
     (setq eide-project-gdb-session-running-flag nil))
   (setq eide-project-gdb-session-visible-flag nil))
 
 ;; ----------------------------------------------------------------------------
 ;; Debug project.
 ;;
-;; input  : p-parameter : option parameter in project configuration for
-;;              debug command.
+;; input  : p-command : option parameter in project configuration for gdb
+;;              command.
+;;          p-program : option parameter in project configuration for gdb
+;;              program.
 ;;          eide-root-directory : project root directory.
 ;; ----------------------------------------------------------------------------
-(defun eide-i-project-debug (p-parameter)
+(defun eide-i-project-debug (p-command p-program)
   (eide-i-project-debug-mode-start)
   ;; sometimes does not compile when a grep buffer is displayed
   ;; "compilation finished" is displayed in grep buffer !
   (switch-to-buffer "*results*")
   ;; Change current directory (of unused buffer "*results*")
   (setq default-directory eide-root-directory)
-  (let ((l-eide-debug-command (eide-config-get-project-value p-parameter)))
+  (let ((l-eide-debug-command (eide-project-get-full-gdb-command p-command p-program)))
     (gdb l-eide-debug-command)))
 
 ;;;; ==========================================================================
@@ -312,6 +314,18 @@
       (concat l-init-command " ; " (eide-config-get-project-value p-parameter)))))
 
 ;; ----------------------------------------------------------------------------
+;; Get full gdb command (gdb command + "--annotate=3" + program name).
+;;
+;; input  : p-command : option parameter in project configuration for gdb
+;;              command.
+;;          p-program : option parameter in project configuration for gdb
+;;              program.
+;; return : full command.
+;; ----------------------------------------------------------------------------
+(defun eide-project-get-full-gdb-command (p-command p-program)
+  (concat (eide-config-get-project-value p-command) " --annotate=3 " (eide-config-get-project-value p-program)))
+
+;; ----------------------------------------------------------------------------
 ;; Get project relative path from absolute path (remove project absolute path
 ;; from directory).
 ;;
@@ -372,14 +386,14 @@
 ;; ----------------------------------------------------------------------------
 (defun eide-project-debug-1 ()
   (interactive)
-  (eide-i-project-debug "debug_command_1"))
+  (eide-i-project-debug "debug_command_1" "debug_program_1"))
 
 ;; ----------------------------------------------------------------------------
 ;; Debug project (2nd debug command).
 ;; ----------------------------------------------------------------------------
 (defun eide-project-debug-2 ()
   (interactive)
-  (eide-i-project-debug "debug_command_2"))
+  (eide-i-project-debug "debug_command_2" "debug_program_2"))
 
 ;; ----------------------------------------------------------------------------
 ;; Retore windows layout of gdb session.

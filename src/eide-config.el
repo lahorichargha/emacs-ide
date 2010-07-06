@@ -653,8 +653,10 @@
     (eide-i-config-rebuild-update-value "project_default_compile_command_4" "")
     (eide-i-config-rebuild-update-value "project_default_run_command_1"     "")
     (eide-i-config-rebuild-update-value "project_default_run_command_2"     "")
-    (eide-i-config-rebuild-update-value "project_default_debug_command_1"   "")
-    (eide-i-config-rebuild-update-value "project_default_debug_command_2"   "")
+    (eide-i-config-rebuild-update-value "project_default_debug_command_1"   "gdb")
+    (eide-i-config-rebuild-update-value "project_default_debug_program_1"   "")
+    (eide-i-config-rebuild-update-value "project_default_debug_command_2"   "gdb")
+    (eide-i-config-rebuild-update-value "project_default_debug_program_2"   "")
 
     (eide-i-config-rebuild-stop)
     (eide-i-config-apply-options)
@@ -683,7 +685,9 @@
     (eide-i-config-rebuild-update-value-from-options "run_command_1"     "project_default_run_command_1")
     (eide-i-config-rebuild-update-value-from-options "run_command_2"     "project_default_run_command_2")
     (eide-i-config-rebuild-update-value-from-options "debug_command_1"   "project_default_debug_command_1")
+    (eide-i-config-rebuild-update-value-from-options "debug_program_1"   "project_default_debug_program_1")
     (eide-i-config-rebuild-update-value-from-options "debug_command_2"   "project_default_debug_command_2")
+    (eide-i-config-rebuild-update-value-from-options "debug_program_2"   "project_default_debug_program_2")
 
     ;; Close options files
     (kill-buffer eide-options-file)
