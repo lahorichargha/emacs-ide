@@ -30,7 +30,7 @@
 ;;;; OPTIONS
 ;;;; ==========================================================================
 
-;; Option values : t = on / nil = off
+;; Option values: t = on / nil = off
 
 ;; Exclude "_" from word delimiters (when selecting by double-click)
 (defvar eide-option-select-whole-symbol-flag t)
@@ -116,9 +116,6 @@
 (make-face-bold 'font-lock-keyword-face)
 (make-face-bold 'font-lock-function-name-face)
 
-(make-face 'font-my-dos-face)
-(set-face-foreground 'font-my-dos-face "wheat")
-
 ;; Menu
 (make-face-bold 'eide-config-menu-project-header-face)
 (make-face-bold 'eide-config-menu-project-name-face)
@@ -138,7 +135,7 @@
 (make-face-bold 'eide-config-help-title-face)
 
 ;; Hidden text (for hide/show minor mode)
-;; Does not work with Emacs 22.3 : I comment it until I can test
+;; Does not work with Emacs 22.3: I comment it until I can test
 ;; and maybe fix the bug.
 ;;(make-face 'font-selective-display-face)
 ;;(set-face-foreground 'font-selective-display-face "blue")
@@ -166,7 +163,7 @@
 (set-face-background 'ediff-odd-diff-face-B "wheat")
 (set-face-foreground 'ediff-odd-diff-face-B "black")
 
-;; Current difference : what is common or only in one buffer
+;; Current difference: what is common or only in one buffer
 (copy-face 'default 'ediff-current-diff-face-A)
 (set-face-background 'ediff-current-diff-face-A "pink")
 (set-face-foreground 'ediff-current-diff-face-A "black")
@@ -175,7 +172,7 @@
 (set-face-background 'ediff-current-diff-face-B "pink")
 (set-face-foreground 'ediff-current-diff-face-B "black")
 
-;; Current difference : what really differs
+;; Current difference: what really differs
 (copy-face 'default 'ediff-fine-diff-face-A)
 (set-face-background 'ediff-fine-diff-face-A "plum")
 (set-face-foreground 'ediff-fine-diff-face-A "black")
@@ -350,7 +347,7 @@
     (if (and (string-match "color_theme_.*" p-parameter)
              (not (color-defined-p l-value)))
       (progn
-        (eide-popup-message (concat "Warning : " p-parameter " value \"" l-value "\" is not correct,\nusing default value \"" p-default-value "\" instead."))
+        (eide-popup-message (concat "Warning: " p-parameter " value \"" l-value "\" is not correct,\nusing default value \"" p-default-value "\" instead."))
         (setq l-value p-default-value)))
     (eide-i-config-rebuild-insert-parameter p-parameter l-value p-possibilities)))
 
@@ -399,18 +396,18 @@
         (set-face-foreground 'eide-config-menu-project-header-face "deep sky blue")
         (set-face-foreground 'eide-config-menu-project-name-face "orange")
 
-        ;; Menu : directories
+        ;; Menu: directories
         (set-face-background 'eide-config-menu-directory-face "dim gray")
         (set-face-foreground 'eide-config-menu-directory-face "white")
         (set-face-background 'eide-config-menu-directory-out-of-project-face "saddle brown")
         (set-face-foreground 'eide-config-menu-directory-out-of-project-face "peach puff")
 
-        ;; Menu : files
+        ;; Menu: files
         (set-face-foreground 'eide-config-menu-file-rw-face "gray95")
         (set-face-foreground 'eide-config-menu-file-face "gray65")
         (setq eide-config-menu-file-highlight-background-color "brown")
 
-        ;; Menu : functions
+        ;; Menu: functions
         (set-face-foreground 'eide-config-menu-function-face "deep sky blue")
         (set-face-background 'eide-config-menu-function-with-highlight-face "navy")
         (set-face-foreground 'eide-config-menu-function-with-highlight-face "deep sky blue")
@@ -461,18 +458,18 @@
         (set-face-foreground 'eide-config-menu-project-header-face "blue")
         (set-face-foreground 'eide-config-menu-project-name-face "red")
 
-        ;; Menu : directories
+        ;; Menu: directories
         (set-face-background 'eide-config-menu-directory-face "lavender blush")
         (set-face-foreground 'eide-config-menu-directory-face "dark violet")
         (set-face-background 'eide-config-menu-directory-out-of-project-face "bisque")
         (set-face-foreground 'eide-config-menu-directory-out-of-project-face "red")
 
-        ;; Menu : files
+        ;; Menu: files
         (set-face-foreground 'eide-config-menu-file-rw-face "black")
         (set-face-foreground 'eide-config-menu-file-face "gray55")
         (setq eide-config-menu-file-highlight-background-color "yellow")
 
-        ;; Menu : functions
+        ;; Menu: functions
         (set-face-foreground 'eide-config-menu-function-face "blue")
         (set-face-background 'eide-config-menu-function-with-highlight-face "aquamarine")
         (set-face-foreground 'eide-config-menu-function-with-highlight-face "blue")
@@ -513,7 +510,7 @@
     (set-face-background 'eide-config-menu-file-svn-modified-face eide-config-menu-background-color)
     (set-face-background 'eide-config-menu-file-rw-face eide-config-menu-background-color)
 
-    ;; Menu : current file
+    ;; Menu: current file
     (copy-face 'eide-config-menu-file-face 'eide-config-menu-current-file-face)
     (copy-face 'eide-config-menu-file-ref-face 'eide-config-menu-current-file-ref-face)
     (copy-face 'eide-config-menu-file-new-face 'eide-config-menu-current-file-new-face)
@@ -556,14 +553,14 @@
     (setq eide-config-show-svn-status-flag t)
     (setq eide-config-show-svn-status-flag nil))
 
-  ;; Windows layout : menu position
+  ;; Windows layout: menu position
   (setq eide-config-menu-position (eide-i-config-get-option-value "menu_position"))
   ;; If menu position is not correct, set default value
   (if (not (or (string-equal eide-config-menu-position "left")
                (string-equal eide-config-menu-position "right")))
     (setq eide-config-menu-position "right"))
 
-  ;; Windows layout : menu height
+  ;; Windows layout: menu height
   (setq eide-config-menu-height (eide-i-config-get-option-value "menu_height"))
   ;; If menu position is not correct, set default value
   (if (not (or (string-equal eide-config-menu-height "half")
@@ -571,7 +568,7 @@
     (setq eide-config-menu-height "half"))
 
   ;; Coding rules
-  ;; TODO : appliquer la valeur sans avoir à recharger les fichiers manuellement (F5)
+  ;; TODO: appliquer la valeur sans avoir à recharger les fichiers manuellement (F5)
   (setq eide-c-indent-offset (string-to-number (eide-i-config-get-option-value "c_indent_offset"))))
 
 ;;;; ==========================================================================

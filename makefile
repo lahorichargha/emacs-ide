@@ -16,11 +16,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-# emacs options :
+# emacs options:
 
-# -nw     : don't use X interface
-# -q      : don't load ~/.emacs
-# -l file : load lisp file
+# -nw: don't use X interface
+# -q: don't load ~/.emacs
+# -l file: load lisp file
 
 # -nw option is not supported in emacs shell
 
@@ -59,7 +59,7 @@ install:
 	@echo "-------------------------------------------------------------------------------"
 	@if [ -e src/eide.elc ]; then ln -vsf src/eide.elc .emacs; else ln -vsf src/eide.el .emacs; fi
 	@if [ -e ~/.emacs -o -h ~/.emacs ]; then \
-	   echo "WARNING : ~/.emacs already exists." ; \
+	   echo "WARNING: ~/.emacs already exists." ; \
 	   mv -v ~/.emacs ~/.emacs_`date +%F_%T` ; \
 	 fi
 	@file=$${PWD}/.emacs ; ln -vs $${file} ~
@@ -67,15 +67,15 @@ install:
 	   if ctags --version | grep -q Exuberant ; then \
 	     echo "Checking ctags..... OK." ; \
 	   else \
-	     echo "Checking ctags..... FAILED : your version of ctags is not \"Exuberant Ctags\"." ; \
+	     echo "Checking ctags..... FAILED: your version of ctags is not \"Exuberant Ctags\"." ; \
 	   fi ; \
 	 else \
-	   echo "Checking ctags..... FAILED : ctags is not installed." ; \
+	   echo "Checking ctags..... FAILED: ctags is not installed." ; \
 	 fi
 	@if which cscope > /dev/null ; then \
 	   echo "Checking cscope.... OK." ; \
 	 else \
-	   echo "Checking cscope.... FAILED : cscope is not installed." ; \
+	   echo "Checking cscope.... FAILED: cscope is not installed." ; \
 	 fi
 
 uninstall:
@@ -86,8 +86,8 @@ uninstall:
 	   if [ -h ~/.emacs -a `ls -l ~/.emacs | grep -c $${PWD}` = "1" ]; then \
 	     rm -vf ~/.emacs ; \
 	   else \
-	     echo "ERROR : ~/.emacs is not linked to Emacs-IDE." ; \
+	     echo "ERROR: ~/.emacs is not linked to Emacs-IDE." ; \
 	   fi ; \
 	 else \
-	   echo "ERROR : ~/.emacs does not exist." ; \
+	   echo "ERROR: ~/.emacs does not exist." ; \
 	 fi

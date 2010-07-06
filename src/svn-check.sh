@@ -28,7 +28,7 @@ for rev in `svn info --xml -rHEAD | grep revision | cut -d'"' -f2`; do
   latest_rev=$rev;
 done
 
-# NB : we check the second revision in svn info output, because:
+# NB: we check the second revision in svn info output, because:
 # - first revision means: last commit in whole repository
 # - second revision means: last modification
 

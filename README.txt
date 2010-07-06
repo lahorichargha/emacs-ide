@@ -78,7 +78,7 @@ will be ignored until you compile again.
 Windows layout overview
 -------------------------------------------------------------------------------
 
-When you launch Emacs, it should look like this :
+When you launch Emacs, it should look like this:
 
         -----------------------------------------------------------
         |                                         |               |

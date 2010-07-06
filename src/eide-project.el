@@ -34,7 +34,7 @@
 (defvar eide-create-tags-command "rm -f TAGS ; ctags -eR --links=no")
 
 ;; Shell command for creating cscope.files
-;; -type f : excludes links
+;; -type f: excludes links
 ;; cscope.out will be generated on next search
 (defvar eide-create-cscope-command "rm -f cscope.files cscope.out ; find . -type f \\( -name \"*.[ch]\"  -o -name \"*.cpp\" -o -name \"*.hh\" \\) > cscope.files")
 
@@ -42,6 +42,9 @@
 (if (string-equal shell-file-name "/bin/bash")
   (setq eide-project-start-shell-alias ". ~/.bashrc") ; for bash
   (setq eide-project-start-shell-alias "")) ; for csh
+
+(defvar eide-project-gdb-session-running-flag nil)
+(defvar eide-project-gdb-session-visible-flag nil)
 
 ;;;; ==========================================================================
 ;;;; INTERNAL FUNCTIONS
@@ -119,23 +122,50 @@
     (shell-command l-run-command)))
 
 ;; ----------------------------------------------------------------------------
+;; Start debug mode.
+;; ----------------------------------------------------------------------------
+(defun eide-i-project-debug-mode-start ()
+  (eide-keys-configure-for-gdb)
+  (eide-windows-layout-unbuild)
+  (if window-system
+    (tool-bar-mode 1))
+  (setq display-buffer-function nil)
+  (setq eide-project-gdb-session-running-flag t)
+  (setq eide-project-gdb-session-visible-flag t))
+
+;; ----------------------------------------------------------------------------
+;; Stop debug mode.
+;;
+;; input  : gdb-exit-flag : t if gdb session is finished
+;; ----------------------------------------------------------------------------
+(defun eide-i-project-debug-mode-stop (gdb-exit-flag)
+  (eide-keys-configure-for-editor)
+  (select-window gdb-source-window)
+  (eide-windows-layout-build)
+  (if window-system
+    (tool-bar-mode -1))
+  (setq display-buffer-function 'eide-i-windows-display-buffer-function)
+  ;; NB: I haven't found a way to know if gdb is still running.
+  ;; gdb-exit-flag is always nil, but should become useful later...
+  (if gdb-exit-flag
+    (setq eide-project-gdb-session-running-flag nil))
+  (setq eide-project-gdb-session-visible-flag nil))
+
+;; ----------------------------------------------------------------------------
 ;; Debug project.
 ;;
 ;; input  : p-parameter : option parameter in project configuration for
 ;;              debug command.
 ;;          eide-root-directory : project root directory.
-;; output : eide-windows-update-result-buffer-id : "d" for "debug".
 ;; ----------------------------------------------------------------------------
 (defun eide-i-project-debug (p-parameter)
-  (eide-windows-select-window-results)
+  (eide-i-project-debug-mode-start)
   ;; sometimes does not compile when a grep buffer is displayed
   ;; "compilation finished" is displayed in grep buffer !
   (switch-to-buffer "*results*")
   ;; Change current directory (of unused buffer "*results*")
   (setq default-directory eide-root-directory)
   (let ((l-eide-debug-command (eide-config-get-project-value p-parameter)))
-    ;; Debug buffer name will be updated in eide-i-windows-display-buffer-function
-    (setq eide-windows-update-result-buffer-id "d")
     (gdb l-eide-debug-command)))
 
 ;;;; ==========================================================================
@@ -191,9 +221,9 @@
 ;; ----------------------------------------------------------------------------
 (defun eide-project-start-with-project ()
   ;; Get project name from directory
-  ;; eide-root-directory                                                     : <...>/current_project/
-  ;; directory-file-name removes last "/"                                    : <...>/current_project
-  ;; file-name-nondirectory retrieves last directory name from complete path : current_project
+  ;; eide-root-directory:                                                     <...>/current_project/
+  ;; directory-file-name removes last "/":                                    <...>/current_project
+  ;; file-name-nondirectory retrieves last directory name from complete path: current_project
   (setq eide-project-name (file-name-nondirectory (directory-file-name eide-root-directory)))
 
   ;; "Lock" project
@@ -229,11 +259,11 @@
     ;; Create empty project notes file
     (shell-command (concat "touch " eide-root-directory eide-project-notes-file)))
 
-  ;; TODO : sous flag
+  ;; TODO: sous flag
   ;; Tag file name with full path
   (setq tags-file-name (concat eide-root-directory "TAGS"))
 
-  ;; Enable desktop save mode : desktop is read and will be saved automatically on exit.
+  ;; Enable desktop save mode: desktop is read and will be saved automatically on exit.
   (desktop-save-mode 1)
   ;; Desktop must be saved without asking (if .emacs.desktop does not exist)
   (setq desktop-save t)
@@ -350,5 +380,15 @@
 (defun eide-project-debug-2 ()
   (interactive)
   (eide-i-project-debug "debug_command_2"))
+
+;; ----------------------------------------------------------------------------
+;; Retore windows layout of gdb session.
+;; ----------------------------------------------------------------------------
+(defun eide-project-debug-show-session ()
+  (interactive)
+  (if eide-project-gdb-session-running-flag
+    (progn
+      (eide-i-project-debug-mode-start)
+      (gdb-restore-windows))))
 
 ;;; eide-project.el ends here

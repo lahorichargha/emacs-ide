@@ -48,10 +48,10 @@
   (setq eide-under-svn-flag t))
 
 ;; Project directory
-;; On Windows : it is necessary to open a temporary file for the directory path
+;; On Windows: it is necessary to open a temporary file for the directory path
 ;; to be correct (Windows standard vs Unix)
-;; On Linux : it is also useful to expand path (~ => /home/xxx/).
-;; NB : "temp" was first used as a temporary filename, but it causes the project
+;; On Linux: it is also useful to expand path (~ => /home/xxx/).
+;; NB: "temp" was first used as a temporary filename, but it causes the project
 ;; directory to be changed to "temp" if "temp" already exists and is a
 ;; directory !... Hence a filename that can not exist !! :-)
 
@@ -185,7 +185,7 @@
 ;; (default value: right for Windows, left for Linux)
 (set-scroll-bar-mode 'right)
 ;; Ignore invisible lines when moving cursor in project configuration
-;; TODO : not used anymore in project configuration => still necessary ?
+;; TODO: not used anymore in project configuration => still necessary ?
 (setq line-move-ignore-invisible t)
 ;; Display current function (relating to cursor position) in info line
 ;; (if possible with current major mode)
@@ -196,12 +196,12 @@
 (setq tags-revert-without-query t)
 ;; Augmenter le nombre de fonctions dans le menu pop up "liste des fonctions"
 ;; (sinon, elles sont parfois inutilement regroupées dans des sous-menus)
-;; (default : 25)
+;; (default: 25)
 ;; no longer used (personal popup menu)
 ;;(setq imenu-max-items 40)
 ;; Augmenter le nombre de buffers dans le menu pop up "liste des buffers"
 ;; (sinon, elles sont parfois inutilement regroupées dans des sous-menus)
-;; (default : 20)
+;; (default: 20)
 ;; no longer used (personal popup menu)
 ;;(setq mouse-buffer-menu-maxlen 40)
 ;; Highlight matching parentheses (when cursor on "(" or just after ")")
@@ -230,6 +230,9 @@
   (ediff-toggle-multiframe))
 ;; ediff: Split horizontally for buffer comparison
 (setq ediff-split-window-function 'split-window-horizontally)
+
+;; gdb: Use graphical interface
+(setq gdb-many-windows t)
 
 ;;;; ==========================================================================
 ;;;; IMENU (LIST OF FUNCTIONS)
@@ -287,7 +290,7 @@
 
 (if nil
   (progn
-    ;; temp : remplace la définition au-dessus
+    ;; temp: remplace la définition au-dessus
     (setq eide-cc-imenu-c-function
           (concat
            "^\\(?:" eide-regex-word eide-regex-space "\\)*"
@@ -365,12 +368,12 @@
       ;; "_" should not be a word delimiter
       (modify-syntax-entry ?_ "w" c-mode-syntax-table))
 
-    (setq indent-tabs-mode nil) ; Indentation : insert spaces instead of tabs
-    (setq tab-width eide-c-indent-offset) ; Tab display : number of char for one tab (default value : 8)
+    (setq indent-tabs-mode nil) ; Indentation: insert spaces instead of tabs
+    (setq tab-width eide-c-indent-offset) ; Tab display: number of char for one tab (default value: 8)
 
-    (c-set-style "K&R")                 ; Indentation style
-    (setq c-basic-offset eide-c-indent-offset) ; Indentation offset (default value : 5)
-    (c-set-offset 'case-label '+) ; Case/default in a switch (default value : 0)
+    (c-set-style "K&R") ; Indentation style
+    (setq c-basic-offset eide-c-indent-offset) ; Indentation offset (default value: 5)
+    (c-set-offset 'case-label '+) ; Case/default in a switch (default value: 0)
 
     ;; Autofill minor mode
     ;; (automatic line feed beyond 80th column)
@@ -408,12 +411,12 @@
       ;; "_" should not be a word delimiter
       (modify-syntax-entry ?_ "w" c-mode-syntax-table))
 
-    (setq indent-tabs-mode nil) ; Indentation : insert spaces instead of tabs
-    (setq tab-width eide-c-indent-offset) ; Tab display : number of char for one tab (default value : 8)
+    (setq indent-tabs-mode nil) ; Indentation: insert spaces instead of tabs
+    (setq tab-width eide-c-indent-offset) ; Tab display: number of char for one tab (default value: 8)
 
-    (c-set-style "K&R")                 ; Indentation style
-    (setq c-basic-offset eide-c-indent-offset) ; Indentation offset (default value : 5)
-    (c-set-offset 'case-label '+) ; Case/default in a switch (default value : 0)
+    (c-set-style "K&R") ; Indentation style
+    (setq c-basic-offset eide-c-indent-offset) ; Indentation offset (default value: 5)
+    (c-set-offset 'case-label '+) ; Case/default in a switch (default value: 0)
 
     ;; Autofill minor mode
     ;; (automatic line feed beyond 80th column)
@@ -446,9 +449,7 @@
 
 (font-lock-add-keywords
  'c-mode
- '(("" . font-my-dos-face)            ;font-lock-comment-face)
-   ;;("__interrupt" . font-lock-keyword-face)
-
+ '(;;("__interrupt" . font-lock-keyword-face)
    ("uint8" . font-lock-type-face)
    ("uint16" . font-lock-type-face)
    ("uint32" . font-lock-type-face)
@@ -468,7 +469,7 @@
       ;; "-" should not be a word delimiter
       (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table))
 
-    ;; Indentation : insert spaces instead of tabs
+    ;; Indentation: insert spaces instead of tabs
     (setq indent-tabs-mode nil)
     (setq tab-width 2)
     (setq lisp-body-indent 2)
@@ -493,7 +494,7 @@
 (add-hook
  'sgml-mode-hook
  '(lambda()
-    ;; Indentation : insert spaces instead of tabs
+    ;; Indentation: insert spaces instead of tabs
     (setq indent-tabs-mode nil)
     (setq tab-width 2)
 
@@ -508,7 +509,7 @@
 (add-hook
  'shell-mode-hook
  '(lambda()
-    ;; Indentation : insert spaces instead of tabs
+    ;; Indentation: insert spaces instead of tabs
     (setq indent-tabs-mode nil)
     (setq tab-width 2)
 
@@ -523,7 +524,7 @@
 (add-hook
  'perl-mode-hook
  '(lambda()
-    ;; Indentation : insert spaces instead of tabs
+    ;; Indentation: insert spaces instead of tabs
     (setq indent-tabs-mode nil)
     (setq tab-width 2)
 
@@ -542,7 +543,7 @@
       ;; "_" should not be a word delimiter
       (modify-syntax-entry ?_ "w" python-mode-syntax-table))
 
-    ;; Indentation : insert tabs
+    ;; Indentation: insert tabs
     (setq indent-tabs-mode t)
     (setq tab-width 4)
     (setq python-indent 4)
@@ -562,7 +563,7 @@
 ;; (which may read this file to create current project config file)
 (eide-config-rebuild-options-file)
 ;; Check if a project is defined, and start it.
-;; NB : It is important to read desktop after mode-hooks have been defined,
+;; NB: It is important to read desktop after mode-hooks have been defined,
 ;; otherwise mode-hooks may not apply.
 (if (file-exists-p eide-project-file)
   (progn
@@ -573,7 +574,7 @@
 ;; Start with "editor" mode
 (eide-keys-configure-for-editor)
 ;; eide-options-file might be present in desktop (in case emacs was closed
-;; while editing options) : we must close it again.
+;; while editing options): we must close it again.
 (if (get-buffer eide-options-file)
   (kill-buffer eide-options-file))
 ;; Close temporary buffers from ediff sessions (if emacs has been closed during
