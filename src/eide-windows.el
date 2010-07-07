@@ -66,7 +66,7 @@
 ;; ----------------------------------------------------------------------------
 ;; Display a buffer in appropriate window.
 ;; Called:
-;; - when launching compile, run, debug or shell.
+;; - when launching compile, run or shell.
 ;;
 ;; input  : p-buffer : buffer.
 ;;          eide-windows-update-result-buffer-id : ID of result buffer to be
@@ -145,7 +145,7 @@
 ;; Override switch-to-buffer function (advice), to display buffer in
 ;; appropriate window.
 ;; Called:
-;; - when switching to compile, run, debug or shell buffer.
+;; - when switching to compile, run or shell buffer.
 ;;
 ;; input  : p-buffer : buffer.
 ;;          eide-windows-is-layout-visible-flag : t = windows layout is shown.
@@ -192,18 +192,21 @@
                   (setq l-window (selected-window)))
                 ad-do-it
                 (set-buffer l-buffer-name)
-                (if eide-search-find-symbol-definition-flag
+                (if eide-project-gdb-session-visible-flag
+                  (eide-menu-update nil)
                   (progn
-                    (recenter)
-                    (setq eide-search-find-symbol-definition-flag nil)))
-                (if (equal l-window eide-windows-window-file)
-                  (progn
-                    (if (and eide-menu-browsing-mode-flag
-                             (not (equal major-mode 'dired-mode))
-                             (not (equal major-mode 'Buffer-menu-mode)))
-                      (eide-menu-browsing-mode-stop))
-                    ;; Update menu if necessary
-                    (eide-menu-update nil)))
+                    (if eide-search-find-symbol-definition-flag
+                      (progn
+                        (recenter)
+                        (setq eide-search-find-symbol-definition-flag nil)))
+                    (if (equal l-window eide-windows-window-file)
+                      (progn
+                        (if (and eide-menu-browsing-mode-flag
+                                 (not (equal major-mode 'dired-mode))
+                                 (not (equal major-mode 'Buffer-menu-mode)))
+                          (eide-menu-browsing-mode-stop))
+                        ;; Update menu if necessary
+                        (eide-menu-update nil)))))
                 ;; Select buffer window
                 (select-window l-window)
                 ;; Return the buffer that it switched to
@@ -472,8 +475,10 @@
         (setq eide-windows-buffer-in-window-results "*results*"))
 
       (select-window eide-windows-window-file)
-
-      (setq eide-windows-is-layout-visible-flag t))))
+      (setq eide-windows-is-layout-visible-flag t)
+      ;; Update menu if necessary
+      (if eide-windows-menu-update-request-pending-flag
+        (eide-menu-update eide-windows-menu-update-request-pending-force-rebuild-flag eide-windows-menu-update-request-pending-force-update-status-flag)))))
 
 ;; ----------------------------------------------------------------------------
 ;; Unbuild windows layout (keep only window "file").
@@ -582,7 +587,7 @@
 (defun eide-windows-handle-mouse-3 ()
   (interactive)
   (if eide-project-gdb-session-visible-flag
-    (eide-i-project-debug-mode-stop nil)
+    (eide-i-project-debug-mode-stop)
     (progn
       ;; Select the window where the mouse is
       (eide-i-windows-select-window-at-mouse-position)
@@ -655,11 +660,7 @@
                             (if eide-menu-browsing-mode-flag
                               (eide-menu-browsing-mode-stop))
                             ;; Build windows layout (if not already built by eide-menu-browsing-mode-stop)
-                            (eide-windows-layout-build)
-                            ;; Update menu if necessary
-                            (if eide-windows-menu-update-request-pending-flag
-                              (eide-menu-update eide-windows-menu-update-request-pending-force-rebuild-flag eide-windows-menu-update-request-pending-force-update-status-flag))
-                            (eide-windows-select-window-file t)))))))))))))))
+                            (eide-windows-layout-build)))))))))))))))
 
 ;; ----------------------------------------------------------------------------
 ;; Handle mouse-2 (middle click) action.
