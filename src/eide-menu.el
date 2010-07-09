@@ -631,16 +631,19 @@
 ;; output : eide-current-buffer : current buffer name (may have changed).
 ;; ----------------------------------------------------------------------------
 (defun eide-menu-directory-close (p-directory-name)
-  (let ((l-ask-flag nil) (l-do-it-flag t) (l-buffer-edit-status nil))
+  (let ((l-ask-flag nil) (l-do-it-flag t) (l-buffer-edit-status nil) (l-buffer-svn-modified-flag nil))
     ;; Check if at least one file has been edited (REF or NEW)
     (dolist (l-buffer eide-menu-files-list)
       (if (eide-menu-is-file-in-directory-p l-buffer p-directory-name)
         (progn
           (save-excursion
             (set-buffer l-buffer)
-            (setq l-buffer-edit-status eide-menu-local-edit-status))
+            (setq l-buffer-edit-status eide-menu-local-edit-status)
+            (if eide-config-show-svn-status-flag
+              (setq l-buffer-svn-modified-flag eide-menu-local-svn-modified-status-flag)))
           (if (or (string-equal l-buffer-edit-status "new")
-                  (string-equal l-buffer-edit-status "ref"))
+                  (string-equal l-buffer-edit-status "ref")
+                  l-buffer-svn-modified-flag)
             (setq l-ask-flag t)))))
     (if l-ask-flag
       (setq l-do-it-flag (eide-popup-question-yes-or-no-p (concat "Some files in " p-directory-name " have been edited. Do you really want to close them ?"))))

@@ -222,7 +222,7 @@
     (eide-i-popup-menu-init)
     (eide-i-popup-menu-add-action "Close all files from this directory" (concat "(eide-menu-directory-close \"" l-directory-name "\")") t)
 
-    (let ((l-buffer-read-only-flag nil) (l-buffer-read-write-flag nil) (l-buffer-status-none-flag nil) (l-buffer-status-new-flag nil) (l-buffer-status-ref-flag nil))
+    (let ((l-buffer-read-only-flag nil) (l-buffer-read-write-flag nil) (l-buffer-status-none-flag nil) (l-buffer-status-new-flag nil) (l-buffer-status-ref-flag nil) (l-buffer-svn-modified-flag nil))
       ;; Parse list of opened buffers, and find the ones located in this
       ;; directory, to check, for every possible property (read only, REF file,
       ;; ...) if at least one of them matches.
@@ -241,7 +241,9 @@
                 (if (string-equal l-buffer-status "new")
                   (setq l-buffer-status-new-flag t)
                   (if (string-equal l-buffer-status "ref")
-                    (setq l-buffer-status-ref-flag t))))))))
+                    (setq l-buffer-status-ref-flag t)))))
+            (if (and eide-config-show-svn-status-flag eide-menu-local-svn-modified-status-flag)
+              (setq l-buffer-svn-modified-flag t)))))
       ;; Actions are enabled only if it can apply to one buffer at least
       (eide-i-popup-menu-add-action "Set all files read/write" (concat "(eide-edit-action-on-directory 'eide-edit-set-rw \"" l-directory-name "\")") l-buffer-read-only-flag)
       (eide-i-popup-menu-add-action "Set all files read only" (concat "(eide-edit-action-on-directory 'eide-edit-set-r \"" l-directory-name "\")") l-buffer-read-write-flag)
@@ -257,7 +259,12 @@
       (eide-i-popup-menu-add-action "Delete trailing spaces in all read/write files" (concat "(eide-edit-action-on-directory 'eide-edit-delete-trailing-spaces \"" l-directory-name "\" \"delete trailing spaces in all read/write files\")") l-buffer-read-write-flag)
       (eide-i-popup-menu-add-action "Convert end of line in all read/write files: DOS to UNIX" (concat "(eide-edit-action-on-directory 'eide-edit-dos-to-unix \"" l-directory-name "\" \"convert end of line (DOS to UNIX) in all read/write files\")") l-buffer-read-write-flag)
       (eide-i-popup-menu-add-action "Convert end of line in all read/write files: UNIX to DOS" (concat "(eide-edit-action-on-directory 'eide-edit-unix-to-dos \"" l-directory-name "\" \"convert end of line (UNIX to DOS) in all read/write files\")") l-buffer-read-write-flag)
-      (eide-i-popup-menu-close-action-list "Clean"))
+      (eide-i-popup-menu-close-action-list "Clean")
+
+      (if eide-config-show-svn-status-flag
+        (progn
+          (eide-i-popup-menu-add-action "svn revert (all modified files)" (concat "(eide-edit-action-on-directory 'eide-svn-revert \"" l-directory-name "\" \"revert all modified files\")") l-buffer-svn-modified-flag)
+          (eide-i-popup-menu-close-action-list "svn"))))
 
     (eide-i-popup-menu-open l-directory-name-in-title)))
 
