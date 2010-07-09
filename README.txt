@@ -2,8 +2,9 @@
 | Emacs-IDE |
 \-----------/
 
-Version 1.4dev - 2010-07
+Version 1.3+ - 2010-07
 
+Homepage: http://home.gna.org/emacs-ide/
 
 -------------------------------------------------------------------------------
 Copyright
@@ -24,9 +25,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
 -------------------------------------------------------------------------------
-About Emacs-IDE
+Description
 -------------------------------------------------------------------------------
 
 Emacs-IDE is an IDE (Integrated Development Environment) interface for Emacs
@@ -49,14 +49,15 @@ Emacs behaviour - in order to manage display in dedicated windows - and
 redefines reserved keys - in order to provide a wide range of convenient
 shortcuts.
 
-Homepage: http://home.gna.org/emacs-ide/
+-------------------------------------------------------------------------------
+License and dependencies
+-------------------------------------------------------------------------------
 
-License:  GPL (http://www.gnu.org/licenses/gpl.html)
+License: GPL (http://www.gnu.org/licenses/gpl.html)
 
-Requires: - Emacs  (http://www.gnu.org/software/emacs/)
-          - Ctags  (http://ctags.sourceforge.net/)
-          - Cscope (http://cscope.sourceforge.net/)
-
+Dependencies: - Emacs (http://www.gnu.org/software/emacs/)
+              - Ctags (http://ctags.sourceforge.net/)
+              - Cscope (http://cscope.sourceforge.net/)
 
 -------------------------------------------------------------------------------
 Installation
@@ -72,7 +73,6 @@ Compilation is optional. Compiled code is just supposed to execute faster...
 If you compile, keep in mind that compiled files (*.elc) will always be used
 instead of source files (*.el). As a consequence, any change in source files
 will be ignored until you compile again.
-
 
 -------------------------------------------------------------------------------
 Windows layout overview
@@ -101,14 +101,12 @@ When you launch Emacs, it should look like this:
 If you click on right button over window "file", all other windows are closed.
 Click again to get them back.
 
-
 -------------------------------------------------------------------------------
 Instructions
 -------------------------------------------------------------------------------
 
 Instructions are available in "Help" page, in Emacs.
 Click on right button over window "menu", and select "Help" in popup menu.
-
 
 -------------------------------------------------------------------------------
 Quick start

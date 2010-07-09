@@ -43,8 +43,8 @@
   (setq eide-project-start-shell-alias ". ~/.bashrc") ; for bash
   (setq eide-project-start-shell-alias "")) ; for csh
 
-(defvar eide-project-gdb-session-running-flag nil)
-(defvar eide-project-gdb-session-visible-flag nil)
+(defvar eide-project-is-gdb-session-running-flag nil)
+(defvar eide-project-is-gdb-session-visible-flag nil)
 
 ;;;; ==========================================================================
 ;;;; INTERNAL FUNCTIONS
@@ -122,29 +122,6 @@
     (shell-command l-run-command)))
 
 ;; ----------------------------------------------------------------------------
-;; Start debug mode.
-;; ----------------------------------------------------------------------------
-(defun eide-i-project-debug-mode-start ()
-  (eide-keys-configure-for-gdb)
-  (eide-windows-layout-unbuild)
-  (if window-system
-    (tool-bar-mode 1))
-  (setq display-buffer-function nil)
-  (setq eide-project-gdb-session-visible-flag t))
-
-;; ----------------------------------------------------------------------------
-;; Stop debug mode.
-;; ----------------------------------------------------------------------------
-(defun eide-i-project-debug-mode-stop ()
-  (eide-keys-configure-for-editor)
-  (select-window gdb-source-window)
-  (eide-windows-layout-build)
-  (if window-system
-    (tool-bar-mode -1))
-  (setq display-buffer-function 'eide-i-windows-display-buffer-function)
-  (setq eide-project-gdb-session-visible-flag nil))
-
-;; ----------------------------------------------------------------------------
 ;; Debug project.
 ;;
 ;; input  : p-program : option parameter in project configuration for gdb
@@ -152,15 +129,14 @@
 ;;          eide-root-directory : project root directory.
 ;; ----------------------------------------------------------------------------
 (defun eide-i-project-debug (p-program)
-  (eide-i-project-debug-mode-start)
+  (eide-windows-select-window-results)
   ;; sometimes does not compile when a grep buffer is displayed
   ;; "compilation finished" is displayed in grep buffer !
   (switch-to-buffer "*results*")
   ;; Change current directory (of unused buffer "*results*")
   (setq default-directory eide-root-directory)
   (let ((l-eide-debug-command (eide-project-get-full-gdb-command p-program)))
-    (gdb l-eide-debug-command))
-  (setq eide-project-gdb-session-running-flag t))
+    (gdb l-eide-debug-command)))
 
 ;;;; ==========================================================================
 ;;;; FUNCTIONS
@@ -372,6 +348,33 @@
   (eide-i-project-run "run_command_2"))
 
 ;; ----------------------------------------------------------------------------
+;; Start debug mode.
+;; ----------------------------------------------------------------------------
+(defun eide-project-debug-mode-start ()
+  ;; Restore colors (in case user was reading help or config)
+  (eide-config-set-colors-for-files)
+  (eide-keys-configure-for-gdb)
+  (eide-windows-layout-unbuild)
+  ;; Show gdb toolbar
+  (if window-system
+    (tool-bar-mode 1))
+  (setq display-buffer-function nil)
+  (setq eide-project-is-gdb-session-visible-flag t)
+  (setq eide-project-is-gdb-session-running-flag t))
+
+;; ----------------------------------------------------------------------------
+;; Stop debug mode.
+;; ----------------------------------------------------------------------------
+(defun eide-project-debug-mode-stop ()
+  (eide-keys-configure-for-editor)
+  (eide-windows-layout-build)
+  ;; Hide gdb toolbar
+  (if window-system
+    (tool-bar-mode -1))
+  (setq display-buffer-function 'eide-i-windows-display-buffer-function)
+  (setq eide-project-is-gdb-session-visible-flag nil))
+
+;; ----------------------------------------------------------------------------
 ;; Debug project (1st debug command).
 ;; ----------------------------------------------------------------------------
 (defun eide-project-debug-1 ()
@@ -384,15 +387,5 @@
 (defun eide-project-debug-2 ()
   (interactive)
   (eide-i-project-debug "debug_program_2"))
-
-;; ----------------------------------------------------------------------------
-;; Retore windows layout of gdb session.
-;; ----------------------------------------------------------------------------
-(defun eide-project-debug-show-session ()
-  (interactive)
-  (if eide-project-gdb-session-running-flag
-    (progn
-      (eide-i-project-debug-mode-start)
-      (gdb-restore-windows))))
 
 ;;; eide-project.el ends here

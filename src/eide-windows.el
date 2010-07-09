@@ -192,7 +192,7 @@
                   (setq l-window (selected-window)))
                 ad-do-it
                 (set-buffer l-buffer-name)
-                (if eide-project-gdb-session-visible-flag
+                (if eide-project-is-gdb-session-visible-flag
                   (eide-menu-update nil)
                   (progn
                     (if eide-search-find-symbol-definition-flag
@@ -321,6 +321,20 @@
   (eide-menu-update nil))
 
 ;; ----------------------------------------------------------------------------
+;; Override gdb-setup-windows function (advice), to unbuild windows layout
+;; before gdb builds its own.
+;; ----------------------------------------------------------------------------
+(defadvice gdb-setup-windows (before eide-gdb-setup-windows-advice-before)
+  (eide-project-debug-mode-start))
+
+;; ----------------------------------------------------------------------------
+;; Override gdb-restore-windows function (advice), to unbuild windows layout
+;; before gdb builds its own.
+;; ----------------------------------------------------------------------------
+(defadvice gdb-restore-windows (before eide-gdb-setup-windows-advice-before)
+  (eide-project-debug-mode-start))
+
+;; ----------------------------------------------------------------------------
 ;; Hook to be called once the frame has been resized.
 ;;
 ;; output : eide-windows-results-window-height : height of window "results".
@@ -351,6 +365,8 @@
       ;; calls switch-to-buffer => we need to override mode-line functions
       (ad-activate 'mode-line-unbury-buffer)
       (ad-activate 'mode-line-bury-buffer)))
+  (ad-activate 'gdb-setup-windows)
+  (ad-activate 'gdb-restore-windows)
   (setq display-buffer-function 'eide-i-windows-display-buffer-function)
   (eide-windows-skip-unwanted-buffers-in-window-file)
   ;; Create menu content (force to build and to retrieve files status)
@@ -416,6 +432,8 @@
   (if (not eide-windows-is-layout-visible-flag)
     (progn
       (delete-other-windows)
+      ;; Make sure that current window is not dedicated
+      (set-window-dedicated-p (selected-window) nil)
 
       ;; Split into 3 windows ("file", "menu", "results")
       (if (string-equal eide-config-menu-height "full")
@@ -476,6 +494,7 @@
 
       (select-window eide-windows-window-file)
       (setq eide-windows-is-layout-visible-flag t)
+      (eide-windows-skip-unwanted-buffers-in-window-file)
       ;; Update menu if necessary
       (if eide-windows-menu-update-request-pending-flag
         (eide-menu-update eide-windows-menu-update-request-pending-force-rebuild-flag eide-windows-menu-update-request-pending-force-update-status-flag)))))
@@ -586,8 +605,8 @@
 ;; ----------------------------------------------------------------------------
 (defun eide-windows-handle-mouse-3 ()
   (interactive)
-  (if eide-project-gdb-session-visible-flag
-    (eide-i-project-debug-mode-stop)
+  (if eide-project-is-gdb-session-visible-flag
+    (eide-project-debug-mode-stop)
     (progn
       ;; Select the window where the mouse is
       (eide-i-windows-select-window-at-mouse-position)

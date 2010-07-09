@@ -369,7 +369,7 @@
   (eide-i-popup-menu-add-action "Execution" (concat "(eide-search-view-result-buffer \"" eide-execution-buffer "\")") eide-execution-buffer)
   (eide-i-popup-menu-add-action "Shell" (concat "(eide-search-view-result-buffer \"" eide-shell-buffer "\")") eide-shell-buffer)
   (eide-i-popup-menu-close-action-list "Compilation / Execution / Shell")
-  (eide-i-popup-menu-add-action "Debug session" (concat "(eide-project-debug-show-session)") eide-project-gdb-session-running-flag)
+  (eide-i-popup-menu-add-action "Debug session" (concat "(gdb-restore-windows)") eide-project-is-gdb-session-running-flag)
   (eide-i-popup-menu-close-action-list "Debug")
   (eide-i-popup-menu-open "Switch to:"))
 
