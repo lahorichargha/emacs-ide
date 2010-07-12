@@ -2,7 +2,7 @@
 | Emacs-IDE |
 \-----------/
 
-Version 1.3+ - 2010-07
+Version 1.4 - 2010-07
 
 Homepage: http://home.gna.org/emacs-ide/
 
@@ -37,7 +37,7 @@ dedicated windows (current file, menu with list of opened files,
 search/compilation output) and convenient shortcuts.
 
 It is suitable for almost all languages (as long as they are supported by
-ctags). Cscope provides additional browsing facility for C/C++ files.
+Ctags). Cscope provides additional browsing facility for C/C++ files.
 
 Please note that Emacs-IDE does not stand as a package for Emacs. It should be
 considered as an IDE built on top of Emacs.
@@ -50,8 +50,10 @@ redefines reserved keys - in order to provide a wide range of convenient
 shortcuts.
 
 -------------------------------------------------------------------------------
-License and dependencies
+Information
 -------------------------------------------------------------------------------
+
+Programming language: Emacs Lisp
 
 License: GPL (http://www.gnu.org/licenses/gpl.html)
 
@@ -75,7 +77,7 @@ instead of source files (*.el). As a consequence, any change in source files
 will be ignored until you compile again.
 
 -------------------------------------------------------------------------------
-Windows layout overview
+Instructions
 -------------------------------------------------------------------------------
 
 When you launch Emacs, it should look like this:
@@ -101,10 +103,6 @@ When you launch Emacs, it should look like this:
 If you click on right button over window "file", all other windows are closed.
 Click again to get them back.
 
--------------------------------------------------------------------------------
-Instructions
--------------------------------------------------------------------------------
-
 Instructions are available in "Help" page, in Emacs.
 Click on right button over window "menu", and select "Help" in popup menu.
 
@@ -114,7 +112,9 @@ Quick start
 
 The directory from which emacs is launched is important: it stands as the root
 directory during emacs session.
+
 If you work on a project - which is the main purpose of Emacs-IDE - you should
 always run emacs from the root directory of your project.
+
 When you first run emacs for a project, click on right button over window
 "menu", and select "Create project".
