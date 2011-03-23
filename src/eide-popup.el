@@ -431,6 +431,8 @@
         (eide-i-popup-menu-add-action "Grep in whole project" (concat "(eide-search-grep-global \"" l-string "\")") t)))
     (eide-i-popup-menu-add-action "Grep in current directory" (concat "(eide-search-grep-local \"" l-string "\")") t)
     (eide-i-popup-menu-close-action-list "Search")
+    (eide-i-popup-menu-add-action "Read manual (man)" (concat "(man \"" l-string "\")") t)
+    (eide-i-popup-menu-close-action-list "Man")
     (eide-i-popup-menu-open (concat "Search: " l-string))))
 
 ;; ----------------------------------------------------------------------------
