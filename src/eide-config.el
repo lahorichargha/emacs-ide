@@ -875,7 +875,7 @@
     (eide-i-config-rebuild-update-value "sgml_indent_offset" "2")
 
     (eide-i-config-rebuild-insert-section "dark_color_theme_colors_for_source")
-    (eide-i-config-rebuild-update-value "dark_color_theme_background" "gray15")
+    (eide-i-config-rebuild-update-value "dark_color_theme_background" "black")
     (eide-i-config-rebuild-update-value "dark_color_theme_foreground" "gray90")
     (eide-i-config-rebuild-update-value "dark_color_theme_keyword_foreground" "salmon")
     (eide-i-config-rebuild-update-value "dark_color_theme_type_foreground" "medium sea green")
@@ -885,7 +885,7 @@
     (eide-i-config-rebuild-update-value "dark_color_theme_constant_foreground" "misty rose")
     (eide-i-config-rebuild-update-value "dark_color_theme_builtin_background" "brown")
     (eide-i-config-rebuild-update-value "dark_color_theme_builtin_foreground" "yellow")
-    (eide-i-config-rebuild-update-value "dark_color_theme_string_background" "gray30")
+    (eide-i-config-rebuild-update-value "dark_color_theme_string_background" "gray15")
     (eide-i-config-rebuild-update-value "dark_color_theme_comment_foreground" "deep sky blue")
     (eide-i-config-rebuild-update-value "dark_color_theme_selection_background" "gray50")
 
