@@ -341,12 +341,12 @@
 (defgroup eide-emacs-settings-coding-rules nil "Indentation for some languages."
   :tag "Coding rules"
   :group 'eide-emacs-settings)
-(defcustom eide-custom-indent-tabs-mode nil "Indentation mode (spaces or tabs)."
+(defcustom eide-custom-indent-mode nil "Indentation mode (spaces or tabs)."
   :tag "Indentation mode"
   :type '(choice (const :tag "Spaces" nil)
                  (const :tag "Tabs" t)
                  (const :tag "Don't override indent-tabs-mode variable" ignore))
-  :set 'eide-i-config-set-indent-tabs-mode
+  :set 'eide-i-config-set-indent-mode
   :initialize 'custom-initialize-default
   :group 'eide-emacs-settings-coding-rules)
 (defcustom eide-custom-c-indent-offset 2 "Indentation offset for C/C++."
@@ -850,14 +850,14 @@
         (set-face-attribute 'default nil :height eide-config-user-font-height)))))
 
 ;; ----------------------------------------------------------------------------
-;; Set indent tabs mode.
+;; Set indentation mode (spaces or tabs).
 ;;
 ;; input  : param : customization parameter.
 ;;          value : customization value.
 ;;          eide-custom-override-emacs-settings : override emacs settings flag.
 ;;          eide-config-user-indent-tabs-mode : user value.
 ;; ----------------------------------------------------------------------------
-(defun eide-i-config-set-indent-tabs-mode (param value)
+(defun eide-i-config-set-indent-mode (param value)
   (set-default param value)
   (if eide-config-ready
     (if (and eide-custom-override-emacs-settings
@@ -982,7 +982,7 @@
       (eide-i-config-set-menu-bar 'eide-custom-show-menu-bar eide-custom-show-menu-bar)
       (eide-i-config-set-tool-bar 'eide-custom-show-tool-bar eide-custom-show-tool-bar)
       (eide-i-config-set-font-height 'eide-custom-font-height eide-custom-font-height)
-      (eide-i-config-set-indent-tabs-mode 'eide-custom-indent-tabs-mode eide-custom-indent-tabs-mode)
+      (eide-i-config-set-indent-mode 'eide-custom-indent-mode eide-custom-indent-mode)
       (eide-i-config-set-cscope-update 'eide-custom-update-cscope-database eide-custom-update-cscope-database))))
 
 ;;;; ==========================================================================
