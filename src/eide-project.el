@@ -1,6 +1,6 @@
 ;;; eide-project.el --- Emacs-IDE, project
 
-;; Copyright (C) 2008-2011 Cédric Marie
+;; Copyright (C) 2008-2012 Cédric Marie
 
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -19,7 +19,7 @@
 
 (provide 'eide-project)
 
-(require 'desktop) ; for all desktop-* functions
+(require 'desktop)
 
 (require 'eide-config)
 (require 'eide-search)
@@ -206,6 +206,8 @@
 
   ;; Enable desktop save mode: desktop is read and will be saved automatically on exit.
   (desktop-save-mode 1)
+  ;; Force desktop read: it is not called when using an alternative init file (emacs -l file)
+  (desktop-read)
   ;; Desktop must be saved without asking (if .emacs.desktop does not exist)
   (setq desktop-save t)
   ;; Set desktop directory (set to nil when desktop save mode is disabled)
