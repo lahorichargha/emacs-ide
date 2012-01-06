@@ -207,7 +207,7 @@
   ;; Enable desktop save mode: desktop is read and will be saved automatically on exit.
   (desktop-save-mode 1)
   ;; Force desktop read: it is not called when using an alternative init file (emacs -l file)
-  (desktop-read)
+  ;;(desktop-read)
   ;; Desktop must be saved without asking (if .emacs.desktop does not exist)
   (setq desktop-save t)
   ;; Set desktop directory (set to nil when desktop save mode is disabled)
